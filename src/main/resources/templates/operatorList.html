@@ -1,0 +1,296 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!--Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
+	<link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+	<link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
+	<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+	<link rel="stylesheet" href="../../assets/css/style.css" />
+	<link rel="shortcut icon" href="assets/images/favicon.png" />
+
+	<!--Bootstrap CSS -->
+	<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+-->
+	<title>Operators</title>
+	<style>
+		.footer {
+			margin-top: 40%;
+		}
+	</style>
+	<!--<style>
+		/* General styles */
+		/*body {
+			font-family: Arial, sans-serif;
+			background-color: #f8f9fa;
+			color: #333;
+		}
+
+		.container {
+			margin-top: 20px;
+		}
+
+		.navbar {
+			margin-bottom: 20px;
+		}
+
+		/* Navbar styles */
+		.navbar-brand {
+			font-size: 1.5rem;
+			font-weight: bold;
+		}
+
+		.navbar-nav .nav-link {
+			font-size: 1.1rem;
+		}
+
+		.navbar .btn {
+			margin-left: 10px;
+		}
+
+		.navbar-toggler-icon {
+			background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%2872, 72, 72, 0.5%29' stroke-width='2' linecap='round' linejoin='round' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+		}
+
+		/* Table styles */
+		.table {
+			margin-top: 20px;
+			background-color: #fff;
+			border-radius: 8px;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		}
+
+		.table th,
+		.table td {
+			text-align: center;
+			vertical-align: middle;
+		}
+
+		.table thead th {
+			background-color: #007bff;
+			color: white;
+			font-weight: bold;
+		}
+
+		.table tbody tr:nth-child(even) {
+			background-color: #f2f2f2;
+		}
+
+		/* Modal styles */
+		.modal-content {
+			border-radius: 8px;
+		}
+
+		.modal-header {
+			background-color: #007bff;
+			color: white;
+			border-top-left-radius: 8px;
+			border-top-right-radius: 8px;
+		}
+
+		.modal-title {
+			font-weight: bold;
+		}
+
+		.btn-close {
+			color: white;
+			opacity: 1;
+		}
+
+		.modal-body {
+			padding: 20px;
+		}
+
+		.modal-body .form-label {
+			font-weight: bold;
+		}
+
+		.modal-body .btn-primary {
+			width: 100%;
+			padding: 10px;
+		}
+
+		.modal-body .alert {
+			display: none;
+		}
+
+		/* Form styles */
+		.form-group2 {
+			margin-bottom: 15px;
+		}
+
+		.form-group2 label {
+			font-weight: bold;
+			margin-bottom: 5px;
+			display: block;
+		}
+
+		.form-group2 input {
+			width: 100%;
+			padding: 8px;
+			border: 1px solid #ced4da;
+			border-radius: 4px;
+		}
+
+		#saveForm {
+			width: 100%;
+			padding: 10px;
+		}
+
+		/* Responsive styles */
+		@media (max-width: 576px) {
+			.navbar-nav .nav-link {
+				font-size: 1rem;
+			}
+
+			.navbar .btn {
+				width: 100%;
+				margin-top: 10px;
+			}
+
+			.container h1 {
+				font-size: 2.5rem;
+			}
+		}
+	</style>-->
+</head>
+
+<body onload="ajaxGet()">
+
+	<div class="container-scroller">
+
+		<nav th:replace="index ::sidebar"></nav>
+
+		<div class="container-fluid page-body-wrapper">
+			<div th:replace="index ::nav-header"></div>
+			<div class="main-panel">
+				<div class="content-wrapper pb-0">
+
+
+
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title text-center">Operatorss</center></h4>
+
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr class="table table-bordered border-primary">
+												<th scope="col"> Operator Id</th>
+												<th scope="col"> Operator Name</th>
+												<th scope="col">Booth</th>
+												<th scope="col">Username</th>
+												<th scope="col">Password</th>
+												<th scope="col">Action</th>
+											</tr>
+										</thead>
+										<tbody id="table">
+
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+
+
+						<!--	Update Form-->
+						<div class="modal fade" id="editData" tabindex="-1" aria-labelledby="exampleModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<h1 class="modal-title fs-5" id="exampleModalLabel">Update Details</h1>
+										<button type="button" class="btn-close" data-bs-dismiss="modal"
+											aria-label="Close"></button>
+									</div>
+									<div class="modal-body">
+										<form id="updateForm">
+
+											<input type="hidden" id="id" name="id"> <!-- Hidden input for ID -->
+											<div class="mb-3">
+
+												<div class="mb-3">
+													<label for="name" class="form-label">Operator name:</label>
+													<input type="text" class="form-control" id="name1" name="name"
+														autocomplete="off">
+												</div>
+												<div class="mb-3">
+													<label for="booth" class="form-label">Booth:</label>
+													<input type="number" class="form-control" id="booth1" name="booth"
+														autocomplete="off">
+												</div>
+												<div class="mb-3">
+													<label for="email" class="form-label">Username:</label>
+													<input type="email" class="form-control" id="email1" name="email"
+														autocomplete="off">
+												</div>
+
+
+												<div class="mb-3">
+													<label for="password" class="form-label">Password:</label>
+													<input type="password" class="form-control" id="password1"
+														name="password" autocomplete="off">
+												</div>
+											</div>
+
+											<div class="modal-footer">
+												<button type="button" class="btn btn-secondary"
+													data-bs-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-success" data-bs-dismiss="modal"
+													id="saveForm">Save changes</button>
+											</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<footer th:replace="index ::footer"></footer>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+	<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+	<!-- endinject -->
+	<!-- Plugin js for this page -->
+	<script src="assets/vendors/chart.js/Chart.min.js"></script>
+	<script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.resize.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.categories.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.fillbetween.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.stack.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.pie.js"></script>
+	<!-- End plugin js for this page -->
+	<!-- inject:js -->
+	<script src="assets/js/off-canvas.js"></script>
+	<script src="assets/js/hoverable-collapse.js"></script>
+	<script src="assets/js/misc.js"></script>
+	<!-- endinject -->
+	<!-- Custom js for this page -->
+	<script src="assets/js/dashboard.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="script/script.js"></script>
+
+</body>
+
+</html>

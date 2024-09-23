@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shift End Report</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f9;
+			color: #333;
+			margin: 0;
+			padding: 20px;
+		}
+
+		.report-container {
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 8px;
+			border: 1px solid #ddd;
+			max-width: 700px;
+			/* Adjusted max-width for better fitting */
+			margin: auto;
+		}
+
+		.table-container {
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 8px;
+			border: 1px solid #ddd;
+			max-width: 700px;
+			/* Adjusted max-width for better fitting */
+			margin: auto;
+		}
+
+		.header,
+		.footer {
+			text-align: center;
+		}
+
+		.header h1,
+		.header h2 {
+			margin: 0;
+		}
+
+		.details,
+		.system-ticket-details,
+		.totals {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+			font-size: 14px;
+		}
+
+		.details th,
+		.details td,
+		.system-ticket-details th,
+		.system-ticket-details td,
+		.totals th,
+		.totals td {
+			padding: 8px;
+			border: 1px solid #ddd;
+		}
+
+		.details th,
+		.system-ticket-details th {
+			background-color: #f4f4f9;
+		}
+
+		.totals {
+			margin-top: 20px;
+		}
+
+		.totals th,
+		.totals td {
+			border: none;
+		}
+
+		.totals td {
+			text-align: right;
+		}
+
+		.section {
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 20px;
+		}
+
+		@media print {
+			body {
+				background: none;
+			}
+
+			.report-container {
+				box-shadow: none;
+				margin: 0;
+				padding: 10px;
+				page-break-after: always;
+				width: 100%;
+			}
+
+			.header h1,
+			.header h2 {
+				font-size: 16px;
+			}
+
+			.details,
+			.system-ticket-details,
+			.totals {
+				font-size: 12px;
+			}
+
+			.details th,
+			.system-ticket-details th,
+			.totals th {
+				font-weight: bold;
+			}
+
+			@page {
+				size: A4;
+				margin: 10mm;
+			}
+
+			.report-container {
+				page-break-inside: avoid;
+			}
+		}
+
+		/*close button*/
+		.button-container {
+			text-align: right;
+			margin-top: 20px;
+		}
+
+		.close-button {
+			background-color: #ff4d4d;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			font-size: 16px;
+			cursor: pointer;
+			border-radius: 5px;
+			transition: background-color 0.3s ease;
+		}
+
+		.close-button:hover {
+			background-color: #e60000;
+		}
+
+		.close-button:focus {
+			outline: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="report-container">
+		<div class="section header">
+			<h1>National Highway Authority of India</h1>
+			<h2>RING ROAD BETWEEN HINGANA-AMRAVATI ROAD NEAR WADI JUNCTION NOTIF.NO-PSP2004/RDR/11/12/2019</h2>
+			<h4>SHIFT END REPORT</h4>
+
+			<table class="details">
+				<tr>
+					<th>Date</th>
+					<td id="currentDate">--</td>
+					<th>Operator Id</th>
+					<td id="operatorId">--</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="header">
+			<h3><i><b>National Highway Authority of India</b></i></h3>
+		</div>
+		<!--<table class="details">
+			<tr>
+				<th>Date</th>
+				<td id="currentDate">--</td>
+				<th>Operator Id</th>
+				<td id="operatorId">--</td>
+			</tr>
+		</table> -->
+		<div class="table-container">
+			<table class="system-ticket-details">
+				<thead>
+					<tr>
+						<th rowspan="2">Vehicle Type</th>
+						<th colspan="3">Single Ticket</th>
+						<th colspan="3">Return Ticket</th>
+					</tr>
+					<tr>
+						<th>Rate</th>
+						<th>Vehicle</th>
+						<th>Amount</th>
+						<th>Rate</th>
+						<th>Vehicle</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody id="dailyCollectionTable">
+					<!--Data will be populated here -->
+				</tbody>
+			</table>
+
+			<table class="totals">
+				<tr>
+					<td>Total System Collection Amount:</td>
+					<td id="totalSystemCollectionAmount"></td>
+				</tr>
+				<tr>
+					<td>Total Manual Collection Amount:</td>
+					<td id="totalManualAmount"></td>
+				</tr>
+				<tr>
+					<td>Short Amount:</td>
+					<td id="shortAmount"></td>
+				</tr>
+				<tr>
+					<td>Access Amount:</td>
+					<td id="accessAmount"></td>
+				</tr>
+				<!--<tr>
+					<td>Total Amount:</td>
+					<td id="totalSystemCollectionAmount"></td>
+				</tr>-->
+			</table>
+			<div class="button-container">
+				<button class="close-button" onclick="closeReport()">Close</button>
+			</div>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!--<script src="script/dailyCollection.js"></script>-->
+
+
+	<script>
+		$(document).ready(function () {
+			// Get the full URL
+			const fullURL = window.location.href;
+
+			// Extract the operator ID (assuming it's the last part of the URL)
+			const operatorId = fullURL.split('/').pop();
+			console.log("Extracted Operator ID:", operatorId);
+			getDailyCollection(operatorId);
+			// Display the operator ID in the relevant field
+			$('#operatorId').text(operatorId);
+			// You can now use this operatorId to make an AJAX call to fetch relevant data
+			$.ajax({
+				type: "GET",
+				url: `/api/getOperatorDetails/${operatorId}`,
+				success: function (data) {
+					// Populate your table or other elements with the fetched data
+					console.log("Operator Details:", data);
+				},
+				error: function (e) {
+					console.error("Error fetching operator details:", e);
+				}
+			});
+		});
+
+		// JavaScript to get the current date
+		$(document).ready(function () {
+			var today = new Date();
+			var day = String(today.getDate()).padStart(2, '0');
+			var month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+			var year = today.getFullYear();
+
+			var currentDate = day + '-' + month + '-' + year;
+			$('#currentDate').text(currentDate);
+		});
+
+		function getDailyCollection(operatorId) {
+			$.ajax({
+				url: '/getTodayVehiclesByOperator/' + operatorId,
+				type: 'GET',
+				success: function (response) {
+					console.log(response); // Debugging: log the data to check its structure
+
+					if (response.length === 0) {
+						alert("No data available for the selected operator.");
+						return;
+					}
+
+					// Process data to group by vehicle type and calculate totals
+					const vehicleData = response.reduce((acc, vehicle) => {
+						const type = vehicle.vehicleType;
+						const isReturn = vehicle.returnType === 'return';
+						const rate = vehicle.amount;
+
+						if (!acc[type]) {
+							acc[type] = {
+								single: {rate: 0, count: 0, amount: 0},
+								return: {rate: 0, count: 0, amount: 0}
+							};
+						}
+
+						if (isReturn) {
+							acc[type].return.rate = rate;
+							acc[type].return.count++;
+							acc[type].return.amount += rate;
+						} else {
+							acc[type].single.rate = rate;
+							acc[type].single.count++;
+							acc[type].single.amount += rate;
+						}
+
+						return acc;
+					}, {});
+
+					// Build table rows
+					let tableBody = '';
+					let totalSystemCollectionAmount = 0;
+					for (const [type, data] of Object.entries(vehicleData)) {
+						tableBody += '<tr>' +
+							'<td>' + type + '</td>' +
+							'<td>' + data.single.rate + '</td>' +
+							'<td>' + data.single.count + '</td>' +
+							'<td>' + data.single.amount + '</td>' +
+							'<td>' + data.return.rate + '</td>' +
+							'<td>' + data.return.count + '</td>' +
+							'<td>' + data.return.amount + '</td>' +
+							'</tr>';
+
+						totalSystemCollectionAmount += data.single.amount + data.return.amount;
+					}
+
+					$('#dailyCollectionTable').html(tableBody);
+					$('#totalSystemCollectionAmount').text('Rs: ' + totalSystemCollectionAmount);
+					updateAmounts(); // Update amounts after loading vehicle data
+				},
+				error: function (e) {
+					console.error('Error loading vehicles:', e);
+				}
+			});
+		}
+
+		//displaying data in viewPage
+
+		function getLatestCollection() {
+			$.ajax({
+				url: '/api/latestCollection',
+				type: 'GET',
+				success: function (response) {
+					if (response) {
+						$('#totalSystemCollectionAmount').text('Rs: ' + response.totalSystemCollectionAmount);
+						$('#totalManualAmount').text('Rs: ' + response.totalManualAmount);
+						$('#shortAmount').text('Rs: ' + response.shortAmount);
+						$('#accessAmount').text('Rs: ' + response.accessAmount);
+					} else {
+						console.error("No data found");
+					}
+				},
+				error: function (e) {
+					console.error('Error fetching the latest collection:', e);
+				}
+			});
+		}
+
+		$(document).ready(function () {
+			getLatestCollection();  // Call the function to load the data on page load
+		});
+		
+		//close button
+		function closeReport() {
+		    window.location.href = '/dailyReport'; 
+		}
+
+
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<!--Required meta tags -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!--Bootstrap CSS -->
+	<!--<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+-->
+	<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
+	<link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+	<link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
+	<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="shortcut icon" href="assets/images/favicon.png" />
+
+	<title>Operators</title>
+	<style>
+			.footer{
+				margin-top:40%;
+			}
+		</style>
+	
+</head>
+
+<body>
+
+	<div class="container-scroller">
+
+		<nav th:replace="index ::sidebar"></nav>
+
+		<div class="container-fluid page-body-wrapper">
+			<div th:replace="index ::nav-header"></div>
+			<div class="main-panel">
+				<div class="content-wrapper pb-0">
+
+
+					<div class="col-lg-12 grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<h4 class="card-title">Vehicles</h4>
+
+								<div class="table-responsive">
+									<table class="table table-striped">
+										<thead>
+											<tr class="table table-bordered border-primary">
+												<th scope="col"> Vehicle Id</th>
+												<th scope="col"> Vehicle </th>
+												<th scope="col">Single Journey Amt</th>
+												<th scope="col">Return Journey Amt</th>
+											</tr>
+										</thead>
+										<tbody id="table">
+
+
+										</tbody>
+									</table>
+
+								</div>
+							</div>
+						</div>
+						
+						
+						<!-- Modal for Viewing/Editing Vehicle Details -->
+						                    <div class="modal fade" id="vehicleModal" tabindex="-1" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+						                        <div class="modal-dialog">
+						                            <div class="modal-content">
+						                                <div class="modal-header">
+						                                    <h5 class="modal-title" id="vehicleModalLabel">Vehicle Details</h5>
+						                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						                                </div>
+						                                <div class="modal-body">
+						                                    <form id="vehicleForm">
+						                                        <div class="mb-3">
+						                                            <label for="vehicleId" class="form-label">Vehicle Id</label>
+						                                            <input type="text" class="form-control" id="vehicleId" name="vehicleId" readonly>
+						                                        </div>
+						                                        <div class="mb-3">
+						                                            <label for="vehicleType" class="form-label">Vehicle Type</label>
+						                                            <input type="text" class="form-control" id="vehicleType" name="vehicleType">
+						                                        </div>
+						                                        <div class="mb-3">
+						                                            <label for="single_amt" class="form-label">Single Journey Amt</label>
+						                                            <input type="number" class="form-control" id="single_amt" name="single_amt" step="0.01">
+						                                        </div>
+						                                        <div class="mb-3">
+						                                            <label for="return_amt" class="form-label">Return Journey Amt</label>
+						                                            <input type="number" class="form-control" id="return_amt" name="return_amt" step="0.01">
+						                                        </div>
+						                                    </form>
+						                                </div>
+						                                <div class="modal-footer">
+						                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						                                    <button type="button" class="btn btn-primary" id="saveVehicle">Save changes</button>
+						                                </div>
+						                            </div>
+						                        </div>
+					</div>
+					<footer th:replace="index ::footer"></footer>
+				</div>
+			</div>
+		</div>
+
+
+	</div>
+
+
+
+
+	<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+	<!-- endinject -->
+	<!-- Plugin js for this page -->
+	<script src="assets/vendors/chart.js/Chart.min.js"></script>
+	<script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.resize.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.categories.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.fillbetween.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.stack.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.pie.js"></script>
+	<!-- End plugin js for this page -->
+	<!-- inject:js -->
+	<script src="assets/js/off-canvas.js"></script>
+	<script src="assets/js/hoverable-collapse.js"></script>
+	<script src="assets/js/misc.js"></script>
+	<!-- endinject -->
+	<!-- Custom js for this page -->
+	<script src="assets/js/dashboard.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+		crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<script src="script/script1.js"></script>
+
+	<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+						integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+						crossorigin="anonymous"></script>
+					<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+						integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+						crossorigin="anonymous"></script>
+					<script src="script/script.js"></script>-->
+
+</body>
+
+</html>

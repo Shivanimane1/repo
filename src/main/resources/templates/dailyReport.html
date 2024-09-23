@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
+	<link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+	<link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
+	<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="shortcut icon" href="assets/images/favicon.png" />
+	<title>Daily Report</title>
+
+	<style>
+		/* Your existing CSS styles here */
+		.footer {
+			margin-top: 40%;
+		}
+
+		.container {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+			margin-top: 20px;
+		}
+
+		.info-container {
+			background-color: #a3b2df;
+			padding: 20px;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			width: 80%;
+			margin-bottom: 20px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.info-group {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		.info-group label {
+			margin-bottom: 5px;
+		}
+
+		.info-group select,
+		.info-group input {
+			width: 150px;
+			padding: 8px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.info-group input:focus,
+		.info-group select:focus {
+			outline: none;
+			border: 1px solid #007bff;
+			box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-scroller">
+		<nav th:replace="index ::sidebar"></nav>
+		<div class="container-fluid page-body-wrapper">
+			<div th:replace="index ::nav-header"></div>
+			<div class="main-panel">
+				<div class="content-wrapper pb-0">
+					
+					<div class="container">
+						<div class="col-lg-12 grid-margin stretch-card">
+							<div class="card">
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-striped">
+											<thead>
+												<tr class="table table-bordered border-primary">
+													<th>Srno</th>
+													<th>Operator Name</th>
+													<th>Operator ID</th>
+													<th>Date</th>
+													<th>Amount</th>
+													<th>Booth</th>
+													<th>Action</th>
+												</tr>
+											</thead>
+											<tbody id="table"></tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<footer th:replace="index ::footer"></footer>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+	<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+	<script src="assets/vendors/chart.js/Chart.min.js"></script>
+	<script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.resize.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.categories.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.fillbetween.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.stack.js"></script>
+	<script src="assets/vendors/flot/jquery.flot.pie.js"></script>
+	<script src="assets/js/off-canvas.js"></script>
+	<script src="assets/js/hoverable-collapse.js"></script>
+	<script src="assets/js/misc.js"></script>
+	<script src="assets/js/dashboard.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+		</script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+		
+		
+		
+		
+		
+		
+		<script>
+		    $(document).ready(function () {
+		        // Fetch total amount from localStorage (if you want to use this)
+		        const totalAmount = localStorage.getItem('totalAmount') || 0;
+		
+		        // AJAX call to fetch today's login details
+		        $.ajax({
+		            type: "GET",
+		            url: "/todays-login-details",
+		            success: function (data) {
+		              //  alert("hhhh")
+		                console.warn("Data:", data);
+		
+		                $.ajax({
+		                    type: "GET",
+		                    url: "/api/getamount",
+		                    success: function (datas) {
+		                      //  alert("wo");
+		                        console.warn("Datas:", datas);
+		
+		                        if (data && data.length > 0) {
+		                            var d = '';
+		                            // Iterate over each login detail
+		                            for (var i = 0; i < data.length; i++) {
+		                                var loginDetail = data[i];
+		                                var matchedAmount = null;
+		
+		                                // Find the matching amount from datas based on operatorId
+		                                for (var j = 0; j < datas.length; j++) {
+		                                    if (datas[j].operatorId == loginDetail.loginOperatorId) {
+		                                        matchedAmount = datas[j].totalAmount;
+		                                        break;
+		                                    }
+		                                }
+		
+		                                if (matchedAmount !== null) {
+		                                    d += '<tr>' +
+		                                        '<td>' + (i + 1) + '</td>' +
+		                                        '<td>' + loginDetail.loginOperatorName + '</td>' +
+		                                        '<td>' + loginDetail.loginOperatorId + '</td>' +
+		                                        '<td>' + loginDetail.loginDate + '</td>' +
+		                                        '<td>' + matchedAmount + '</td>' + // Display total amount here
+		                                        '<td>' + loginDetail.loginOperatorBooth + '</td>' +
+		                                        '<td><button class="btn btn-dark view-btn mdi mdi-eye" data-id="' + loginDetail.loginOperatorId + '"></button></td>' +
+		                                        '</tr>';
+		                                } else {
+		                                    console.warn("No matching amount found for operatorId:", loginDetail.loginOperatorId);
+		                                }
+		                            }
+		                            $('#table').html(d);
+		
+		                            // Attach click event handler to dynamically added buttons
+		                            $('.view-btn').on('click', function () {
+		                                var operatorId = $(this).data('id');
+		                                window.location.href = 'viewPage/' + operatorId;
+										//window.location.href = 'receipt/' + operatorId;
+		                            });
+		                        } else {
+		                            console.log("No data found for today's login details.");
+		                        }
+		                    },
+		                    error: function (e) {
+		                        console.error("Error fetching today's amount details:", e);
+		                        alert("error...");
+		                    }
+		                });
+		            },
+		            error: function (e) {
+		                console.error("Error fetching today's login details:", e);
+		            }
+		        });
+		    });
+		</script>
+		</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7; /* Light background for contrast */
+            display: flex; /* Use flexbox for centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100vh; /* Full viewport height */
+            margin: 0; /* Remove default margin */
+        }
+
+        .modal-content {
+            border-radius: 10px;
+            overflow: hidden;
+            width: 300px; /* Set a fixed width for receipt-like appearance */
+            border: 2px solid #007bff; /* Add a border with color */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional shadow for depth */
+        }
+
+        .modal-header {
+            background-color: rgb(225, 225, 225);
+            color: white;
+            padding: 10px;
+            position: relative;
+            text-align: center;
+        }
+
+        .modal-info {
+            font-size: 16px; /* Adjusted font size for header */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .close {
+            position: absolute;
+            top: 5px;
+            right: 10px;
+            font-size: 20px; /* Smaller close button */
+            color: white;
+            opacity: 0.8;
+        }
+
+        .close:hover {
+            opacity: 1;
+        }
+
+        .modal-body {
+            padding: 15px; /* Reduced padding */
+            font-size: 14px; /* Smaller font size */
+            text-align: left; /* Left-align text for a receipt */
+        }
+
+        .modal-title {
+            font-size: 20px; /* Adjusted font size for title */
+            font-weight: bold;
+            color: #333;
+            margin: 0; /* Removed margin for compactness */
+        }
+
+        .modal-body p {
+            margin: 5px 0; /* Reduced margin for body paragraphs */
+        }
+
+        .modal-footer {
+            background-color: #f1f1f1;
+            padding: 10px;
+            text-align: right;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .btn {
+            padding: 5px 10px; /* Smaller button padding */
+            border: none;
+            border-radius: 5px;
+            font-size: 14px; /* Smaller button text */
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+        }
+
+        .btn-info {
+            background-color: #17a2b8;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <div class="modal fade" id="vehicleModal" tabindex="-1" role="dialog" aria-labelledby="vehicleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <p class="modal-info">
+                        <center>National Highway Authority of India</center>
+                    </p>
+                </div>
+                <div class="modal-body">
+                    <h5 class="modal-title" id="vehicleModalLabel"><b><i><center>Ticket</center></i></b></h5><br>
+                    <p><strong>Vehicle Number:</strong> <span id="modalVehicleNumber"></span></p>
+                    <p><strong>Vehicle:</strong> <span id="modalVehicleType"></span></p>
+                    <p><strong>Return Type:</strong> <span id="modalReturnType"></span></p>
+                    <p><strong>Amount:</strong> <span id="modalAmount"></span></p>
+                </div>
+                <!--<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info" id="modalPrint">Print</button>  Added Print Button 
+                </div>-->
+            </div>
+        </div>
+    </div>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+	        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+	<Script>
+		$(document).ready(function() {
+		    $('#modalVehicleNumber').text(localStorage.getItem('printVehicleNumber'));
+		    $('#modalVehicleType').text(localStorage.getItem('printVehicleType'));
+		    $('#modalReturnType').text(localStorage.getItem('printReturnType'));
+		    $('#modalAmount').text(localStorage.getItem('printAmount'));
+		});
+	</Script>
+</body>
+</html>

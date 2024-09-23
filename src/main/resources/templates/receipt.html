@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Shift End Report</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f4f4f9;
+			color: #333;
+			margin: 0;
+			padding: 20px;
+		}
+
+		.report-container {
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 8px;
+			border: 1px solid #ddd;
+			max-width: 700px;
+			/* Adjusted max-width for better fitting */
+			margin: auto;
+		}
+
+		.table-container {
+			padding: 20px;
+			background-color: #fff;
+			border-radius: 8px;
+			border: 1px solid #ddd;
+			max-width: 700px;
+			/* Adjusted max-width for better fitting */
+			margin: auto;
+		}
+
+		.header,
+		.footer {
+			text-align: center;
+		}
+
+		.header h1,
+		.header h2 {
+			margin: 0;
+		}
+
+		.details,
+		.system-ticket-details,
+		.totals {
+			width: 100%;
+			border-collapse: collapse;
+			margin-top: 20px;
+			font-size: 14px;
+		}
+
+		.details th,
+		.details td,
+		.system-ticket-details th,
+		.system-ticket-details td,
+		.totals th,
+		.totals td {
+			padding: 8px;
+			border: 1px solid #ddd;
+		}
+
+		.details th,
+		.system-ticket-details th {
+			background-color: #f4f4f9;
+		}
+
+		.totals {
+			margin-top: 20px;
+		}
+
+		.totals th,
+		.totals td {
+			border: none;
+		}
+
+		.totals td {
+			text-align: right;
+		}
+
+		.section {
+			border: 1px solid #ddd;
+			border-radius: 5px;
+			padding: 10px;
+			margin-bottom: 20px;
+		}
+
+		@media print {
+			body {
+				background: none;
+			}
+
+			.report-container {
+				box-shadow: none;
+				margin: 0;
+				padding: 10px;
+				page-break-after: always;
+				width: 100%;
+			}
+
+			.header h1,
+			.header h2 {
+				font-size: 16px;
+			}
+
+			.details,
+			.system-ticket-details,
+			.totals {
+				font-size: 12px;
+			}
+
+			.details th,
+			.system-ticket-details th,
+			.totals th {
+				font-weight: bold;
+			}
+
+			@page {
+				size: A4;
+				margin: 10mm;
+			}
+
+			.report-container {
+				page-break-inside: avoid;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="report-container">
+		<div class="section header">
+			<h1>National Highway Authority of India</h1>
+			<h2>RING ROAD BETWEEN HINGANA-AMRAVATI ROAD NEAR WADI JUNCTION NOTIF.NO-PSP2004/RDR/11/12/2019</h2>
+			<h4>SHIFT END REPORT</h4>
+
+			<table class="details">
+				<tr>
+					<th>Date</th>
+					<td id="currentDate">--</td>
+					<th>Operator Id</th>
+					<td id="operatorId">--</td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="header">
+			<h3><i><b>National Highway Authority of India</b></i></h3>
+		</div>
+		<!--<table class="details">
+			<tr>
+				<th>Date</th>
+				<td id="currentDate">--</td>
+				<th>Operator Id</th>
+				<td id="operatorId">--</td>
+			</tr>
+		</table> -->
+		<div class="table-container">
+			<table class="system-ticket-details">
+				<thead>
+					<tr>
+						<th rowspan="2">Vehicle Type</th>
+						<th colspan="3">Single Ticket</th>
+						<th colspan="3">Return Ticket</th>
+					</tr>
+					<tr>
+						<th>Rate</th>
+						<th>Vehicle</th>
+						<th>Amount</th>
+						<th>Rate</th>
+						<th>Vehicle</th>
+						<th>Amount</th>
+					</tr>
+				</thead>
+				<tbody id="dailyCollectionTable">
+					<!--Data will be populated here -->
+				</tbody>
+			</table>
+
+			<table class="totals">
+				<tr>
+					<td>Total System Collection Amount:</td>
+					<td id="totalSystemCollectionAmount"></td>
+				</tr>
+				<tr>
+					<td>Total Manual Collection Amount:</td>
+					<td id="totalManualAmount"></td>
+				</tr>
+				<tr>
+					<td>Short Amount:</td>
+					<td id="shortAmount"></td>
+				</tr>
+				<tr>
+					<td>Access Amount:</td>
+					<td id="accessAmount"></td>
+				</tr>
+				<!--<tr>
+					<td>Total Amount:</td>
+					<td id="totalSystemCollectionAmount"></td>
+				</tr>-->
+			</table>
+		</div>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="script/dailyCollection.js"></script>
+</body>
+
+</html>

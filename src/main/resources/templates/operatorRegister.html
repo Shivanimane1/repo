@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<!--<link rel="stylesheet" href="css/opRegister.css">-->
+	<link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css" />
+	<link rel="stylesheet" href="assets/vendors/flag-icon-css/css/flag-icon.min.css" />
+	<link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css" />
+	<link rel="stylesheet" href="assets/vendors/font-awesome/css/font-awesome.min.css" />
+	<link rel="stylesheet" href="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css" />
+	<link rel="stylesheet" href="assets/css/style.css" />
+	<link rel="shortcut icon" href="assets/images/favicon.png" />
+
+	<title>Document</title>
+
+	<style>
+		/* General styles */
+		body {
+					font-family: Arial, sans-serif;
+					background-color: #f8f9fa;
+					color: #333;
+					margin: 0;
+					padding: 0;
+					justify-content: center;
+				}
+
+	/*	body {
+			font-family: 'Roboto', sans-serif;
+			background-color: #f8f9fa;
+			color: #333;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			height: 100vh;
+			margin: 0;
+		}*/
+
+/*		.col-md-6 {
+			max-width: 600px;
+			width: 100%;
+		}
+
+		.card {
+			background-color: #ffffff;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			border-radius: 10px;
+			padding: 20px;
+			margin: 20px;
+		}
+
+		.card-body {
+			padding: 20px;
+		}
+
+		.card-title {
+			font-size: 1.5rem;
+			color: #007bff;
+			text-align: center;
+			margin-bottom: 10px;
+			font-weight: bold;
+		}
+
+		.form-group {
+			margin-bottom: 15px;
+		}
+
+		.form-group label {
+			font-weight: bold;
+			margin-bottom: 5px;
+			display: block;
+		}
+
+		.form-control {
+			width: 100%;
+			padding: 10px;
+			border: 1px solid #ced4da;
+			border-radius: 4px;
+			transition: border-color 0.3s;
+		}
+
+		.form-control:focus {
+			border-color: #007bff;
+			box-shadow: none;
+		}
+
+		.btn {
+			padding: 10px 20px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			transition: background-color 0.3s;
+		}
+
+		.btn-primary {
+			background-color: #007bff;
+			color: #ffffff;
+		}
+
+		.btn-primary:hover {
+			background-color: #0056b3;
+		}
+
+		.btn-light {
+			background-color: #f8f9fa;
+			color: #333;
+		}
+
+		.btn-light:hover {
+			background-color: #e2e6ea;
+		}
+
+		/* Responsive styles */
+		/*@media (max-width: 576px) {
+			.col-md-6 {
+				padding: 10px;
+			}
+
+			.card {
+				padding: 10px;
+			}
+
+			.card-body {
+				padding: 10px;
+			}
+		}*/
+	</style>
+</head>
+
+<body>
+
+	<div class="container-scroller">
+
+		<nav th:replace="index ::sidebar"></nav>
+
+		<div class="container-fluid page-body-wrapper">
+			<div th:replace="index ::nav-header"></div>
+			<div class="main-panel">
+				<div class="content-wrapper pb-0">
+
+
+					<div class=" grid-margin stretch-card">
+						<div class="card">
+							<div class="card-body">
+								<div class="container my-5 p-5" style="border:1px solid black">
+								<h4 class="card-title text-center">Operator Registration</h4>
+
+								<form action="/save" method="post" id="form1" autocomplete="off" class="forms-sample">
+									<div class="form-group">
+										<label for="name"> Operator name</label>
+										<input type="text" class="form-control" id="name" placeholder="name" />
+									</div>
+									<div class="form-group">
+										<label for="booth">Booth</label>
+										<input type="number" class="form-control" id="booth"
+											placeholder="Booth number" />
+									</div>
+									<div class="form-group">
+										<label for="email">username</label>
+										<input type="email" class="form-control" id="email" placeholder="Username" />
+									</div>
+									<div class="form-group">
+										<label for="password">Password</label>
+										<input type="password" class="form-control" id="password"
+											placeholder="Password" />
+									</div>
+
+									<button type="submit" class="btn btn-primary mr-2"> Submit </button>
+
+								</form>
+							</div>
+						</div>
+						</div>
+					</div>
+				
+
+					<footer th:replace="index ::footer"></footer>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="assets/vendors/js/vendor.bundle.base.js"></script>
+		<!-- endinject -->
+		<!-- Plugin js for this page -->
+		<script src="assets/vendors/chart.js/Chart.min.js"></script>
+		<script src="assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.resize.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.categories.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.fillbetween.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.stack.js"></script>
+		<script src="assets/vendors/flot/jquery.flot.pie.js"></script>
+		<!-- End plugin js for this page -->
+		<!-- inject:js -->
+		<script src="assets/js/off-canvas.js"></script>
+		<script src="assets/js/hoverable-collapse.js"></script>
+		<script src="assets/js/misc.js"></script>
+		<!-- endinject -->
+		<!-- Custom js for this page -->
+		<script src="assets/js/dashboard.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+			crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+			integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+		<script src="script/script.js"></script>
+	
+
+
+
+	<!--<script src="script/script.js"></script>-->
+
+
+
+</body>
+
+</html>
