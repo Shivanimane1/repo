@@ -9,14 +9,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name="booth")
 public class Booth {
-   
-    
     
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,12 +23,15 @@ public class Booth {
     private String vehicleType;
     private String returnType;
     private Double amount;
+    private String boothNo;
 
     @ManyToOne
     @JoinColumn(name = "op_id")
  
     @JsonBackReference
     private Operators operators;
+    
+   
 
 	public Integer getId() {
 		return id;
@@ -88,6 +88,17 @@ public class Booth {
 	public void setOperators(Operators operators) {
 		this.operators = operators;
 	}
+
+	public String getBoothNo() {
+		return boothNo;
+	}
+
+	public void setBoothNo(String boothNo) {
+		this.boothNo = boothNo;
+	}
+
+	
+	
     
     
     

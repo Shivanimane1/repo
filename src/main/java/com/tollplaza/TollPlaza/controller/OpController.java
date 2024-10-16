@@ -97,7 +97,7 @@ public class OpController {
 		if (op.isPresent()) {
 			Operators existsch = op.get();
 			existsch.setName(operators.getName());
-			existsch.setBooth(operators.getBooth());
+			existsch.setBooth_no(operators.getBooth_no());
 			existsch.setEmail(operators.getEmail());
 			existsch.setPassword(operators.getPassword());
 			

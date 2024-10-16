@@ -56,7 +56,7 @@ public class OpLoginController {
 	        loginDetails.setLoginOperatorId(authenOp.getOpId());
 	        loginDetails.setLoginOperatorName(authenOp.getName());
 	        loginDetails.setLoginOperatorEmail(authenOp.getEmail());
-	        loginDetails.setLoginOperatorBooth(authenOp.getBooth());
+	        loginDetails.setLoginOperatorBooth(authenOp.getBooth_no());
 
 	        // Set the operator relationship
 	        loginDetails.setOperator(authenOp);

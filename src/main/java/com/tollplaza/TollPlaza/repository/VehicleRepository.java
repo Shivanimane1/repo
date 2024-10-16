@@ -11,4 +11,11 @@ import com.tollplaza.TollPlaza.entity.Vehicles;
 public interface VehicleRepository extends JpaRepository<Vehicles, Long> {
     Optional<Vehicles> findByVehicleType(String vehicleType);
 
+    
+    
+    
+	
+
+	/* List<Vehicles> findByDate(String date); */
+
 }

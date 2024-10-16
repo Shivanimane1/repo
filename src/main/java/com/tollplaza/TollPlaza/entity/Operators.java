@@ -23,7 +23,8 @@ public class Operators {
 	    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	    private Long opId;
 	    private String name;
-	    private String booth;
+	   
+		private String booth_no;
 	    private String email;
 	    private String password;
 
@@ -64,13 +65,7 @@ public class Operators {
 			this.name = name;
 		}
 
-		public String getBooth() {
-			return booth;
-		}
-
-		public void setBooth(String booth) {
-			this.booth = booth;
-		}
+		
 
 		public String getEmail() {
 			return email;
@@ -103,6 +98,21 @@ public class Operators {
 		public void setBooths(List<Booth> booths) {
 			this.booths = booths;
 		}
+
+		public String getBooth_no() {
+			return booth_no;
+		}
+
+		public void setBooth_no(String booth_no) {
+			this.booth_no = booth_no;
+		}
+
+		public String getBoothNo() {
+			return booth_no;
+		}
+
+		
+		
 	    
 	    
 }

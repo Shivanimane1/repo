@@ -21,11 +21,12 @@ $(document).ready(function() {
 		alert("do you want to save...")
         var formData = {
             name: $("#name").val(),
-            booth: $("#booth").val(),
+            booth_no: $("#booth").val(),
             email: $("#email").val(),
             password: $("#password").val()
         };
 
+		console.log("New Operator Added :", formData);
         $.ajax({
             type: "POST",
             url: "/save",
@@ -67,7 +68,7 @@ $(document).ready(function() {
                     d += '<tr>' +
                          '<td>' + data[i].opId + '</td>' +
                          '<td>' + data[i].name + '</td>' +
-                         '<td>' + data[i].booth + '</td>' +
+                         '<td>' + data[i].booth_no + '</td>' +
                          '<td>' + data[i].email + '</td>' +
                          '<td>' + data[i].password + '</td>' +
                          '<td><button data-bs-toggle="modal" data-bs-target="#editData" data-operator-id="' + data[i].opId + '" id="editBtn-' + data[i].opId + '" class="btn-rounded  btn btn-info  mdi mdi-lead-pencil"></button> ' +
@@ -106,7 +107,7 @@ $(document).on('click', '[id^="editBtn-"]', function() {
 			if (data) {
 				$("#id").val(data.opId); // Ensure this matches your Operators entity field name
 				$("#name1").val(data.name);
-				$("#booth1").val(data.booth);
+				$("#booth1").val(data.booth_no);
 				$("#email1").val(data.email);
 				$("#password1").val(data.password);
 			}
@@ -127,14 +128,14 @@ $("#saveForm").on('click', function(e){
 
 	let id = $("#id").val();
 	let name = $("#name1").val();
-	let booth = $("#booth1").val();
+	let booth_no = $("#booth1").val();
 	let email = $("#email1").val();
 	let password = $("#password1").val();
 
 	let updatedData = {
 		opId: id, // Ensure this matches your Operators entity field name
 		name: name,
-		booth: booth,
+		booth_no: booth_no,
 		email: email,
 		password: password
 	};
@@ -159,93 +160,6 @@ $("#saveForm").on('click', function(e){
 
 
 
-
-/*
-$(document).on('click', '[id^="editBtn-"]', function() {
-	alert("Do you want to change data ?")
-	let opId = $(this).data('operator-id');
-	console.log("opId is : " + opId);
-	
-	$.ajax({
-		type: "GET",
-		contentType: "application/json",
-		url: "/get_operator/" + opId,
-		dataType: 'json',
-		success: function(data) {
-			console.log("Data received:",data);
-			alert("loading");
-			if (data) {
-				console.log("operator id is : " + data.id);
-				console.log("operator name is : " + data.name);
-				console.log("operator's booth is : " + data.booth);
-				console.log("operator email is : " + data.email);
-				console.log("operator password is : " + data.password);
-				
-			
-				$("#id").val(data.opId);
-				$("#name1").val(data.name);
-				$("#booth1").val(data.booth);
-				$("#email1").val(data.email);
-				$("#password1").val(data.password);	
-
-			}
-			console.log(data);
-		},
-
-		error: function(e) {
-
-			console.log("Error in feching data for Id....");
-		}
-	});
-});
-
----------------------------------------------------------------------------------------------------------------------
-
-//update data
-
-    
-$("#saveForm").on('click', function(e){
-	alert("Updating data ...");
-	
-	e.preventDefault();
-	
-	let id = $("#id").val();
-	let name = $("#name1").val();
-	let booth = $("#booth1").val();
-	let email = $("#email1").val();
-	let password= $("#password1").val();
-
-	let updatedData = {
-
-		id : id,
-		name : name,
-		booth : booth,
-		email : email,
-		password : password
-	};
-	console.log(updatedData);
-
-		$.ajax({
-
-				type: "PUT",
-				contentType: "application/json",
-				url: "/editData",
-				data: JSON.stringify(updatedData),
-				dataType: 'json',
-				success: function (response) {
-
-					alert("Updated Sucessfully...");
-
-					ajaxGet();
-				},
-
-				error: function (e) {
-					alert("Not Working..");
-					
-				}
-			});
-
-});*/
 /*-------------------------------------------------------------------------------------------------------------------*/
 $(document).on('click', '[id^="deleteBtn-"]', function() {
         let opId = $(this).data('operator-id');

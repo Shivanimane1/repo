@@ -1,6 +1,9 @@
 package com.tollplaza.TollPlaza.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.tollplaza.TollPlaza.entity.Booth;
 import com.tollplaza.TollPlaza.entity.LoginDetails;
 import com.tollplaza.TollPlaza.service.LoginDetailsService;
 
@@ -17,6 +21,9 @@ public class LoginDetailsController {
 	
 	@Autowired
     private LoginDetailsService loginDetailsService;
+	
+	
+	
 
 	 @GetMapping("/todays-login-details/{operatorId}")
 	    @ResponseBody
@@ -39,45 +46,73 @@ public class LoginDetailsController {
 	            return ResponseEntity.noContent().build();
 	        }
 	    }
+
 	 
-	 //fetching data by operator id
+	 
 	 @GetMapping("/login-details/{operatorId}")
 	 @ResponseBody
-	 public ResponseEntity<List<LoginDetails>> getLoginDetailsByOperatorId(@PathVariable Long operatorId) {
-	     System.out.println("Received Operator ID: " + operatorId);  // Log the operator ID for debugging
+	 public ResponseEntity<Map<String, Object>> getLoginDetailsByOperatorId(
+	         @PathVariable Long operatorId) {
+	     
+	     System.out.println("Received Operator ID: " + operatorId);
+
 	     List<LoginDetails> loginDetails = loginDetailsService.getLoginDetailsByOperatorId(operatorId);
+
 	     if (!loginDetails.isEmpty()) {
-	         return ResponseEntity.ok(loginDetails);
+	         long totalVehicles = loginDetails.size();
+	         long singleVehicles = loginDetails.stream()
+	                                           .filter(ld -> "single".equals(ld.getReturnType()))
+	                                           .count();
+	         long returnVehicles = loginDetails.stream()
+	                                           .filter(ld -> "return".equals(ld.getReturnType()))
+	                                           .count();
+
+	         // Fetch booth data through LoginDetails
+	         List<Map<String, Object>> vehicleDetails = loginDetails.stream().map(ld -> {
+	             Booth booth = ld.getBooth();
+	             Map<String, Object> vehicleInfo = new HashMap<>();
+	             
+	             // Fetching vehicleType from Booth and other vehicle-related details
+	             vehicleInfo.put("vehicleType", booth.getVehicleType());
+	             vehicleInfo.put("vehicleNumber", booth.getVehicleNumber());
+	             vehicleInfo.put("singleVehicleCount", singleVehicles);
+	             vehicleInfo.put("returnVehicleCount", returnVehicles);
+	             
+	             // Using booth amount for rates
+	             if ("single".equals(ld.getReturnType())) {
+	                 vehicleInfo.put("singleAmount", singleVehicles * booth.getAmount());
+	             } else if ("return".equals(ld.getReturnType())) {
+	                 vehicleInfo.put("returnAmount", returnVehicles * booth.getAmount());
+	             }
+	             
+	             return vehicleInfo;
+	         }).toList();
+
+	         // Prepare the response
+	         Map<String, Object> response = new HashMap<>();
+	         response.put("vehicleDetails", vehicleDetails);
+	         response.put("totalVehicles", totalVehicles);
+	         response.put("singleVehicles", singleVehicles);
+	         response.put("returnVehicles", returnVehicles);
+
+	         return ResponseEntity.ok(response);
 	     } else {
 	         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
 	     }
 	 }
 
-     //fetching data by date
-//	 @GetMapping("/login-details/date/{date}")
-//	 public List<LoginDetails> getLoginDetailsByDate(@PathVariable String date) {
-//	     // Logic to fetch login details for the specified date
-//	     return loginDetailsService.getLoginDetailsByDate(date);
-//	 }
-	 
-	 @GetMapping("/login-details/date/{date}")
-	 public ResponseEntity<List<LoginDetails>> getLoginDetailsByDate(@PathVariable String date) {
-	     try {
-	         List<LoginDetails> details = loginDetailsService.getLoginDetailsByDate(date);
-	         if (details.isEmpty()) {
-	             return ResponseEntity.noContent().build(); // Return 204 No Content if no data is found
-	         }
-	         return ResponseEntity.ok(details);
-	     } catch (Exception e) {
-	         e.printStackTrace(); // Log the exception for debugging
-	         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build(); // Return 500 Internal Server Error
-	     }
-	 }
 
 
+	 @GetMapping("/getVehiclesDetailsById/{opId}")
+	    public ResponseEntity<List<Booth>> getBoothsDetailsByOperatorId(@PathVariable Long opId) {
+	        List<Booth> booths = loginDetailsService.getBoothDeatilsById(opId);
+	        if (booths.isEmpty()) {
+	            return ResponseEntity.noContent().build();
+	        } else {
+	            return ResponseEntity.ok(booths);
+	        }
+	    }
 
-	 
-	 
 }
 
 

@@ -39,12 +39,25 @@ public class LoginDetails {
     private String amount;
     
 	private String returnType;
+	
+	
+	@ManyToOne
+    @JoinColumn(name = "booth_id", referencedColumnName = "id")
+    private Booth booth;
     
     
 
     // Constructors, getters, and setters
 	
 	
+	public Booth getBooth() {
+		return booth;
+	}
+
+	public void setBooth(Booth booth) {
+		this.booth = booth;
+	}
+
 	public String getReturnType() {
 		return returnType;
 	}
@@ -128,4 +141,6 @@ public class LoginDetails {
     public void setOperator(Operators operator) {
         this.operator = operator;
     }
+
+	
 }

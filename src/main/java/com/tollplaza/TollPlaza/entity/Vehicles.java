@@ -18,8 +18,7 @@ public class Vehicles {
     private double single_amt;
     private double return_amt;
 
-    // Getters and Setters
-
+    
     public Long getId() {
         return id;
     }

@@ -17,6 +17,5 @@ public interface OpRepository extends JpaRepository<Operators, Long> {
 	
 	Optional<Operators> findByEmailAndPassword(String email,String password);
 
-
 }	
 

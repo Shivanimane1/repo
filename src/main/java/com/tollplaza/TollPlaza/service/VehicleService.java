@@ -39,4 +39,12 @@ public class VehicleService {
 		
 	}
 
+//	 public List<Vehicles> getVehiclesByDate(String date) {
+//	        // Assuming you have a method in your repository to find vehicles by date
+//	        return vehicleRepository.findByDate(date);
+//	    }
+
+	
+	
+	
 }
